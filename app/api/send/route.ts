@@ -51,8 +51,12 @@ export async function POST(req: Request) {
       htmlContent += `<h3>Message / Notes</h3><p>${message}</p>`;
     }
 
+    if (!process.env.RESEND_API_KEY) {
+      return NextResponse.json({ error: 'Resend API Key is missing' }, { status: 500 });
+    }
+
     const { data, error } = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>', // The user will need to configure their domain later
+      from: 'Epignosis Housing <onboarding@resend.dev>', // Resend requires domain verification for custom from addresses. Defaulting to onboarding for immediate testing.
       to: [EMAIL],
       subject: subject || 'New Property Inquiry',
       replyTo: email,
@@ -60,6 +64,7 @@ export async function POST(req: Request) {
     });
 
     if (error) {
+      console.error("Resend API Error:", error);
       return NextResponse.json({ error }, { status: 400 });
     }
 
