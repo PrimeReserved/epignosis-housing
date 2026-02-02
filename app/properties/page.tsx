@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import PropertySlideshow from "@/components/PropertySlideshow";
 import PropertyInquiryModal from "@/components/PropertyInquiryModal";
 import { PROPERTY_IMAGES, PROPERTY_TEMPLATE } from "@/constants/data";
@@ -128,10 +127,6 @@ export default function PropertiesPage() {
       </section>
 
 
-      {/* Hide global WhatsApp button on this page as we have the sticky inquiry bar */}
-      <div className="hidden">
-        <WhatsAppButton />
-      </div>
 
       <PropertyInquiryModal
         isOpen={!!inquiryMethod}
