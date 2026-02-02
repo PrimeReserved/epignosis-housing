@@ -14,7 +14,7 @@ export default function LocationsSection() {
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '20%']);
 
   return (
-    <section ref={containerRef} className="relative w-full h-[60vh] overflow-hidden">
+    <section ref={containerRef} className="relative w-full h-[60vh] overflow-hidden -mt-12">
       {/* Parallax Map */}
       <motion.div 
         style={{ y }}

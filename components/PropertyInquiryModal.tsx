@@ -299,9 +299,16 @@ Features: ${formData.additionalInfo}`;
                     </h3>
                   </div>
                   <p className="text-muted mb-8 text-sm leading-relaxed">
-                    {submitStatus === "success" ? "Thank you! Your inquiry has been sent." : (isSell 
-                      ? "Help us understand your property better. Provide the following details to help us generate an accurate valuation for your property." 
-                      : "Please fill in your personal details and submit the form. Our team will get back to you shortly.")}
+                    {submitStatus === "success" ? "Thank you! Your inquiry has been sent." : (
+                      <span className="flex flex-col gap-2">
+                         <span>{isSell 
+                          ? "Help us understand your property better. Provide the following details to help us generate an accurate valuation for your property." 
+                          : "Please fill in your personal details and submit the form. Our team will get back to you shortly."}</span>
+                        <span className="text-gold font-bold text-xs uppercase tracking-widest bg-gold/5 p-3 rounded-xl inline-block border border-gold/10">
+                          Note: Please finish these final details to complete your secure {method === "whatsapp" ? "WhatsApp" : "Email"} inquiry.
+                        </span>
+                      </span>
+                    )}
                   </p>
 
                   {submitStatus === "success" ? (
@@ -341,7 +348,7 @@ Features: ${formData.additionalInfo}`;
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div className={`grid grid-cols-1 ${method === "whatsapp" ? "sm:grid-cols-2" : "sm:grid-cols-1"} gap-6`}>
                         <div className="space-y-1">
                           <label className="text-[10px] font-bold text-navy uppercase tracking-widest opacity-60">Mobile Number</label>
                           <input
@@ -354,18 +361,20 @@ Features: ${formData.additionalInfo}`;
                             placeholder="+44 ..."
                           />
                         </div>
-                        <div className="space-y-1">
-                          <label className="text-[10px] font-bold text-navy uppercase tracking-widest opacity-60">WhatsApp Number</label>
-                          <input
-                            type="tel"
-                            name="whatsappForm"
-                            required
-                            value={formData.whatsappForm}
-                            onChange={handleChange}
-                            className="w-full bg-accent/30 border border-navy/5 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-gold"
-                            placeholder="+44 ..."
-                          />
-                        </div>
+                        {method === "whatsapp" && (
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold text-navy uppercase tracking-widest opacity-60">WhatsApp Number</label>
+                            <input
+                              type="tel"
+                              name="whatsappForm"
+                              required
+                              value={formData.whatsappForm}
+                              onChange={handleChange}
+                              className="w-full bg-accent/30 border border-navy/5 rounded-2xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-gold"
+                              placeholder="+44 ..."
+                            />
+                          </div>
+                        )}
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">

@@ -8,8 +8,8 @@ export default function ContactPage() {
     <main className="min-h-screen bg-white">
       <ContactHero />
       <ContactInfo />
-      <LocationsSection />
       <FAQ />
+      <LocationsSection />
     </main>
   );
 }
