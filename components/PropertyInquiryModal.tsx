@@ -246,7 +246,7 @@ Features: ${formData.additionalInfo}`;
                   className="text-center py-6"
                 >
                   <h3 className="text-3xl font-bold text-navy mb-4">Choose Your Platform</h3>
-                  <p className="text-muted mb-10">How would you like to reach out to our concierge team?</p>
+                  <p className="text-muted mb-10">How would you like to reach out to our team?</p>
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <button
