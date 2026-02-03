@@ -64,12 +64,12 @@ export default function ContactHero() {
               <div className="h-[1px] w-16 bg-gold" />
             </div>
 
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-8 leading-[0.9] tracking-tighter">
+            <h1 className="text-5xl md:text-8xl lg:text-9xl font-bold mb-8 leading-[0.9] tracking-tighter">
               Let's Start a <br />
               <span className="text-gold italic">Conversation.</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-white/80 leading-relaxed max-w-3xl mx-auto mb-12">
+            <p className="text-lg md:text-2xl text-white/80 leading-relaxed max-w-3xl mx-auto mb-12">
               Our team is at your side to navigate your project's specific housing requirements with precision and ease.
             </p>
 
