@@ -64,10 +64,10 @@ export default function Hero() {
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-[1.1] tracking-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.1] tracking-tight"
           >
-            Find Your <span className="italic font-normal text-gold">Perfect</span> <br />
-            Home with Us
+            Long-Term Stays. <span className="italic font-normal text-gold">Built</span> <br />
+            for Real Life and Real Work
           </motion.h1>
 
           <div className="flex flex-col lg:flex-row lg:items-end gap-8 lg:gap-12">
@@ -77,7 +77,7 @@ export default function Hero() {
               transition={{ duration: 0.8, delay: 0.4 }}
               className="text-base md:text-lg text-white/80 max-w-xl leading-relaxed"
             >
-              We believe long-term stays should feel like home. Epignosis specializes 
+              We believe long-term stays should feel like home. Epignosis Housing Co specializes 
               in premium housing solutions for project professionals and relocating families 
               across the United Kingdom.
             </motion.p>

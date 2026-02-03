@@ -113,8 +113,9 @@ export default function Navbar() {
     }
   }, [isOpen]);
 
-  // Pages with White/Light headers where we need Navy text immediately
-  const isLightHeader = ["/about", "/properties"].includes(pathname);
+  // Only /properties needs an immediately-dark nav (white page top).
+  // /about now has a dark hero at the top → behaves like "/" : white until scrolled.
+  const isLightHeader = ["/properties"].includes(pathname);
   const useDarkLogo = isScrolled || isLightHeader;
 
   const textColor = useDarkLogo ? "text-navy" : "text-white";
@@ -356,8 +357,6 @@ export default function Navbar() {
                     <span className="relative z-10">Contact Us</span>
                   </Link>
                 </motion.div>
-
-
               </div>
             </motion.div>
           </>

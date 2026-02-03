@@ -75,9 +75,9 @@ export default function ContactHero() {
 
             {/* Quick Contact Info */}
             <div className="flex flex-wrap items-center justify-center gap-6 md:gap-10 text-sm md:text-base">
-              <a href="mailto:info@epignosis.co.uk" className="flex items-center gap-2 text-white/70 hover:text-gold transition-colors group">
+              <a href="mailto:info@epignosishousing.com" className="flex items-center gap-2 text-white/70 hover:text-gold transition-colors group">
                 <Mail size={18} className="group-hover:scale-110 transition-transform" />
-                <span>info@epignosis.co.uk</span>
+                <span>info@epignosishousing.com</span>
               </a>
               <a href="tel:+447123456789" className="flex items-center gap-2 text-white/70 hover:text-gold transition-colors group">
                 <Phone size={18} className="group-hover:scale-110 transition-transform" />
