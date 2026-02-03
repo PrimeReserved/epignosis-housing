@@ -1,6 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { SITE_NAME, EMAIL, NAV_LINKS, WHATSAPP_NUMBER } from "@/constants/data";
 import { Instagram, Linkedin, Facebook, Mail, Phone } from "lucide-react";
+
+const LOGO_URL = "https://res.cloudinary.com/dfwty72r9/image/upload/v1770105452/Epignosis_Housing_Co_Logo_-_jqvggd.png";
 
 export default function Footer() {
   return (
@@ -13,8 +16,13 @@ export default function Footer() {
           {/* Left: Brand Identity */}
           <div className="space-y-4">
             <Link href="/" className="inline-block">
-              <span className="text-2xl font-bold text-gold tracking-tight">EPIGNOSIS</span>
-              <span className="block text-[10px] font-sans tracking-[0.3em] uppercase text-white/40 -mt-1">Housing Co</span>
+              <Image
+                src={LOGO_URL}
+                alt="Epignosis Housing Co"
+                width={160}
+                height={100}
+                className="w-auto h-20"
+              />
             </Link>
             <p className="text-white/60 text-sm leading-relaxed max-w-xs">
               Refining the corporate relocation experience with premium long-term accommodations across the United Kingdom.

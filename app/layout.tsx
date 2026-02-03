@@ -15,6 +15,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const LOGO_URL = "https://res.cloudinary.com/dfwty72r9/image/upload/v1770105452/Epignosis_Housing_Co_Logo_-_jqvggd.png";
+
 // Comprehensive SEO Metadata
 export const metadata: Metadata = {
   metadataBase: new URL('https://epignosishousing.com'),
@@ -68,7 +70,7 @@ export const metadata: Metadata = {
     title: "Epignosis Housing Co | Long-Term Accommodation UK",
     description: "Premium long-term housing for contractors and professionals. Flexible, comfortable, reliable.",
     images: ["/og-image.jpg"],
-    creator: "@epignosishousing", // Update when Twitter account is created
+    creator: "@epignosishousing",
   },
   
   // Robots
@@ -86,14 +88,22 @@ export const metadata: Metadata = {
   
   // Verification tags (add when available)
   verification: {
-    google: '', // Add Google Search Console verification
-    // yandex: '',
-    // bing: '',
+    google: '',
   },
   
   // Alternate languages (if multilingual in future)
   alternates: {
     canonical: "https://epignosishousing.com",
+  },
+  
+  // Icons — logo used as favicon candidate
+  icons: {
+    icon: [
+      { url: LOGO_URL, type: "image/png" },
+    ],
+    apple: [
+      { url: LOGO_URL, sizes: "180x180", type: "image/png" },
+    ],
   },
   
   // Additional metadata
@@ -124,7 +134,7 @@ export default function RootLayout({
     "name": "Epignosis Housing Co",
     "description": "Forward-thinking accommodation provider delivering tailored housing solutions for long-term contractors, family relocators, and remote professionals.",
     "url": "https://epignosishousing.com",
-    "logo": "https://epignosishousing.com/logo.png",
+    "logo": LOGO_URL,
     "email": "info@epignosishousing.com",
     "telephone": "+44 7123 456789",
     "address": {
@@ -146,7 +156,8 @@ export default function RootLayout({
     "serviceType": "Long-Term Accommodation Services",
     "provider": {
       "@type": "RealEstateAgent",
-      "name": "Epignosis Housing Co"
+      "name": "Epignosis Housing Co",
+      "logo": LOGO_URL
     },
     "areaServed": {
       "@type": "Country",
@@ -229,7 +240,7 @@ export default function RootLayout({
         <main>{children}</main>
         <Footer />
         
-        {/* Tawk.to Code - Simplified without auto-hide logic */}
+        {/* Tawk.to Code */}
         <Script id="tawk-to" strategy="afterInteractive">
           {`
             var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();

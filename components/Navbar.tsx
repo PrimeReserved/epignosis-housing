@@ -2,10 +2,13 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const LOGO_URL = "https://res.cloudinary.com/dfwty72r9/image/upload/v1770105452/Epignosis_Housing_Co_Logo_-_jqvggd.png";
 
 const NAV_ITEMS = [
   { name: "About Us", href: "/about" },
@@ -34,7 +37,6 @@ export default function Navbar() {
       const scrollToElement = () => {
         const element = document.getElementById(pendingScroll);
         if (element) {
-          // Wait a bit for the page to fully render
           setTimeout(() => {
             const offsetTop = element.offsetTop - 100;
             window.scrollTo({
@@ -44,7 +46,6 @@ export default function Navbar() {
             setPendingScroll(null);
           }, 100);
         } else {
-          // Retry if element not found yet
           setTimeout(scrollToElement, 100);
         }
       };
@@ -68,7 +69,6 @@ export default function Navbar() {
   // Control Tawk widget visibility based on mobile menu state
   useEffect(() => {
     const hideTawkWidget = () => {
-      // Try multiple ways to hide the Tawk widget
       const iframe = document.querySelector('iframe[title*="chat" i]');
       if (iframe) {
         const container = iframe.closest('div[style*="position"]') as HTMLElement;
@@ -80,7 +80,6 @@ export default function Navbar() {
         }
       }
 
-      // Also try to hide via Tawk API
       const tawkAPI = (window as any).Tawk_API;
       if (tawkAPI?.hideWidget) {
         tawkAPI.hideWidget();
@@ -99,7 +98,6 @@ export default function Navbar() {
         }
       }
 
-      // Also try to show via Tawk API
       const tawkAPI = (window as any).Tawk_API;
       if (tawkAPI?.showWidget) {
         tawkAPI.showWidget();
@@ -107,24 +105,19 @@ export default function Navbar() {
     };
 
     if (isOpen && window.innerWidth < 768) {
-      // Hide widget when menu opens on mobile
       hideTawkWidget();
-      // Keep checking in case Tawk loads after menu opens
       const interval = setInterval(hideTawkWidget, 100);
       return () => clearInterval(interval);
     } else {
-      // Show widget when menu closes or on desktop
       showTawkWidget();
     }
   }, [isOpen]);
 
   // Pages with White/Light headers where we need Navy text immediately
   const isLightHeader = ["/about", "/properties"].includes(pathname);
+  const useDarkLogo = isScrolled || isLightHeader;
 
-  // Default to White text (for Dark headers like Home, Services, Contact) unless scrolled or on a light header page
-  const textColor = isScrolled || isLightHeader ? "text-navy" : "text-white";
-  const logoColor = isScrolled || isLightHeader ? "text-gold" : "text-white";
-  const subTitleColor = isScrolled || isLightHeader ? "text-navy/80" : "text-white/60";
+  const textColor = useDarkLogo ? "text-navy" : "text-white";
 
   // Smooth scroll handler for hash links
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isHashLink?: boolean) => {
@@ -132,15 +125,12 @@ export default function Navbar() {
       e.preventDefault();
       setIsOpen(false);
       
-      // Extract the section ID from href (e.g., "/services" -> "services")
       const sectionId = href.replace('/', '');
       
-      // If we're not on homepage, navigate to home first then scroll
       if (pathname !== '/') {
         setPendingScroll(sectionId);
         router.push('/');
       } else {
-        // Already on homepage, just scroll
         const element = document.getElementById(sectionId);
         if (element) {
           const offsetTop = element.offsetTop - 100;
@@ -164,19 +154,25 @@ export default function Navbar() {
         )}
       >
         <div className="max-w-[90vw] xl:max-w-[80vw] mx-auto flex items-center justify-between">
-          <Link href="/" className="flex flex-col items-start space-x-2">
-            <span className={cn(
-              "text-2xl font-bold tracking-tight transition-colors",
-              logoColor
-            )}>
-              EPIGNOSIS
-            </span>
-            <span className={cn(
-              "text-[10px] font-sans tracking-[0.3em] uppercase -mt-1 transition-colors",
-              subTitleColor
-            )}>
-              Housing Co
-            </span>
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <Image
+              src={LOGO_URL}
+              alt="Epignosis Housing Co"
+              width={180}
+              height={70}
+              priority
+              sizes="180px"
+              className={cn(
+                "w-auto transition-all duration-300",
+                isScrolled ? "h-12" : "h-14"
+              )}
+              style={
+                useDarkLogo
+                  ? { filter: "brightness(0.82) saturate(1.1)" }
+                  : {}
+              }
+            />
           </Link>
 
           {/* Desktop Nav */}
@@ -205,7 +201,7 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Toggle - Shows X when menu is open */}
+          {/* Mobile Toggle */}
           <button
             className={cn(
               "md:hidden transition-all relative z-[60] w-10 h-10 flex items-center justify-center",
@@ -245,7 +241,7 @@ export default function Navbar() {
       <AnimatePresence>
         {isOpen && (
           <>
-            {/* Backdrop - clicking closes menu */}
+            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -263,7 +259,23 @@ export default function Navbar() {
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
               className="fixed top-0 right-0 bottom-0 w-full sm:w-[85vw] max-w-md bg-gradient-to-br from-navy via-navy to-navy/95 z-[50] md:hidden shadow-2xl overflow-hidden"
             >
-              {/* Close X Button - Top Right Corner */}
+              {/* Logo — top left, mirroring its normal navbar position */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.15, duration: 0.3, ease: "easeOut" }}
+                className="absolute top-5 left-6 z-[60]"
+              >
+                <Image
+                  src={LOGO_URL}
+                  alt="Epignosis Housing Co"
+                  width={180}
+                  height={70}
+                  className="w-auto h-14"
+                />
+              </motion.div>
+
+              {/* Close Button */}
               <button
                 onClick={() => setIsOpen(false)}
                 className="absolute top-6 right-6 z-[60] w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-sm text-white hover:bg-white/20 transition-all hover:rotate-90 duration-300"
@@ -301,7 +313,7 @@ export default function Navbar() {
                 />
               </div>
 
-              {/* Menu Content Container - with proper padding and spacing */}
+              {/* Menu Content */}
               <div className="relative h-full flex flex-col pt-24 pb-8 px-8">
                 {/* Navigation Links */}
                 <nav className="flex-1 flex flex-col justify-center space-y-8 -mt-8">
@@ -328,7 +340,7 @@ export default function Navbar() {
                   ))}
                 </nav>
 
-                {/* Contact Us Button - At Bottom */}
+                {/* Contact Us Button */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -345,18 +357,7 @@ export default function Navbar() {
                   </Link>
                 </motion.div>
 
-                {/* Logo Watermark */}
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.5 }}
-                  className="mt-8 flex flex-col items-center opacity-20"
-                >
-                  <span className="text-white text-xl font-bold tracking-tight">EPIGNOSIS</span>
-                  <span className="text-white text-[8px] font-sans tracking-[0.3em] uppercase -mt-1">
-                    Housing Co
-                  </span>
-                </motion.div>
+
               </div>
             </motion.div>
           </>
