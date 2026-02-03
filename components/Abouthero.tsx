@@ -59,7 +59,7 @@ export default function AboutHero() {
           {/* Label */}
           <div className="flex items-center gap-3 mb-5">
             <span className="block w-10 h-[1.5px] bg-[#c9a84c]" />
-            <span className="text-[#c9a84c] text-[11px] font-bold tracking-[3.5px] uppercase">About the Company</span>
+            <span className="text-[#c9a84c] text-[11px] font-bold tracking-[3.5px] uppercase">About Us</span>
           </div>
 
           {/* Heading */}
