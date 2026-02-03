@@ -1,12 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Globe, Mail, MessageCircle, ChevronRight } from "lucide-react";
 import { UK_COUNTRIES } from "@/constants/data";
 import PropertyInquiryModal from "./PropertyInquiryModal";
 
 const RENTAL_TERMS = ["1-6 Months", "6-12 Months", "1-5 Years", "5+ Years"];
+
+const INITIAL_FORM_DATA = {
+  country: "",
+  exactLocation: "",
+  rentalTerm: "",
+  message: "",
+};
 
 export default function PropertyInquirySection() {
   const [activeTab, setActiveTab] = useState<"Rent" | "Buy" | "Sell">("Rent");
@@ -15,12 +22,16 @@ export default function PropertyInquirySection() {
   const [inquiryMethod, setInquiryMethod] = useState<"email" | "whatsapp">("email");
   const [errors, setErrors] = useState<Record<string, boolean>>({});
   
-  const [formData, setFormData] = useState({
-    country: "",
-    exactLocation: "",
-    rentalTerm: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+
+  // Reset form when modal closes
+  useEffect(() => {
+    if (!isModalOpen) {
+      setFormData(INITIAL_FORM_DATA);
+      setStep("search");
+      setErrors({});
+    }
+  }, [isModalOpen]);
 
   const handleNextStep = () => {
     const newErrors: any = {
@@ -60,6 +71,7 @@ export default function PropertyInquirySection() {
                    setActiveTab(tab);
                    setStep("search");
                    setErrors({});
+                   setFormData(INITIAL_FORM_DATA);
                 }}
                 className={`flex-1 py-4 md:py-6 text-center text-xs font-bold uppercase tracking-[0.2em] transition-all border-r border-white/10 last:border-r-0 relative group ${
                   activeTab === tab 

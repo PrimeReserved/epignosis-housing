@@ -35,17 +35,14 @@ export default function PropertySlideshow({ images, className }: PropertySlidesh
     return () => clearInterval(interval);
   }, [nextSlide, isAutoPlaying]);
 
-  // Thumbs need to map to: [0, 1, 2, 3] (Left), [4, 5, 6] (Right)
-  // But we have 7 images total in PROPERTY_IMAGES usually. 
-  // Let's assume we cycle if needed or just slice.
   const leftThumbs = images.slice(0, 4);
   const rightThumbs = images.slice(4, 7);
 
   return (
     <>
-      <div className={cn("grid grid-cols-1 lg:grid-cols-12 gap-4 h-[65vh] lg:h-[75vh] w-full", className)}>
+      <div className={cn("grid grid-cols-1 lg:grid-cols-12 gap-4 h-auto lg:h-[75vh] w-full", className)}>
         
-        {/* LEFT COLUMN (4 Thumbs) - Hidden on mobile/tab unless handled differently, but requirement says "4 pictures on the left" */}
+        {/* LEFT COLUMN (4 Thumbs) */}
         <div className="hidden lg:flex lg:col-span-2 flex-col gap-4 h-full">
             {leftThumbs.map((img, idx) => (
               <button
@@ -63,7 +60,7 @@ export default function PropertySlideshow({ images, className }: PropertySlidesh
 
         {/* MAIN IMAGE (Center) */}
         <div 
-          className="col-span-1 lg:col-span-8 relative h-full w-full rounded-3xl overflow-hidden group bg-navy flex items-center justify-center"
+          className="col-span-1 lg:col-span-8 relative h-[420px] sm:h-[480px] lg:h-full w-full rounded-3xl overflow-hidden group bg-navy flex items-center justify-center"
           style={{ boxShadow: "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset" }}
         >
 

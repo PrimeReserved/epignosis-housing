@@ -55,7 +55,7 @@ export default function Hero() {
                 ))}
               </div>
               <p className="text-white/60 text-[10px] font-bold uppercase tracking-wider">
-                Trusted by 500+ happy clients
+                Trusted by 1000+ happy clients
               </p>
             </div>
           </motion.div>

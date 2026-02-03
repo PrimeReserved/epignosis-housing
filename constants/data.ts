@@ -57,6 +57,11 @@ export const SERVICES = [
     description: "Lease terms ranging from 1 month to 5+ years to match your project's timeline.",
     icon: "Clock",
   },
+  {
+    title: "Property Management (Internal Portfolio)",
+    description: "Professional oversight and maintenance of our owned properties to ensure quality standards.",
+    icon: "Building",
+  },
 ];
 
 export const FAQS = [

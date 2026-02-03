@@ -7,9 +7,10 @@ import { useState } from "react";
 
 export default function Services() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const isOddNumber = SERVICES.length % 2 !== 0;
 
   return (
-    <section className="relative py-16 md:py-12 px-4 sm:px-6 bg-white overflow-hidden" id="services">
+    <section className="relative py-16 md:py-12 px-4 sm:px-6 bg-white overflow-hidden" id="services" >
       
       {/* Sophisticated Background Grid */}
       <div className="absolute inset-0 opacity-[0.015]">
@@ -45,7 +46,7 @@ export default function Services() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="h-[1px] w-12 bg-gold" />
                 <span className="text-gold font-bold uppercase tracking-[0.3em] text-[9px] md:text-[10px]">
-                  What We Offer
+                  OUR SERVICES
                 </span>
               </div>
 
@@ -126,6 +127,8 @@ export default function Services() {
           {SERVICES.map((service, index) => {
             const Icon = (LucideIcons as any)[service.icon];
             const isHovered = hoveredIndex === index;
+            const isLastItem = index === SERVICES.length - 1;
+            const shouldSpanFull = isOddNumber && isLastItem;
             
             return (
               <ServiceCard
@@ -136,6 +139,7 @@ export default function Services() {
                 isHovered={isHovered}
                 onHover={() => setHoveredIndex(index)}
                 onLeave={() => setHoveredIndex(null)}
+                spanFull={shouldSpanFull}
               />
             );
           })}
@@ -151,7 +155,8 @@ function ServiceCard({
   index, 
   isHovered,
   onHover,
-  onLeave
+  onLeave,
+  spanFull = false
 }: { 
   service: any; 
   icon: any; 
@@ -159,6 +164,7 @@ function ServiceCard({
   isHovered: boolean;
   onHover: () => void;
   onLeave: () => void;
+  spanFull?: boolean;
 }) {
   return (
     <motion.div
@@ -172,7 +178,9 @@ function ServiceCard({
       }}
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
-      className="group relative bg-gradient-to-br from-gold/5 via-transparent to-navy/5 rounded-2xl overflow-hidden cursor-pointer border border-gold/30 hover:border-gold/50 transition-all duration-500 hover:shadow-xl hover:shadow-gold/10"
+      className={`group relative bg-gradient-to-br from-gold/5 via-transparent to-navy/5 rounded-2xl overflow-hidden cursor-pointer border border-gold/30 hover:border-gold/50 transition-all duration-500 hover:shadow-xl hover:shadow-gold/10 ${
+        spanFull ? 'md:col-span-2' : ''
+      }`}
     >
       {/* Sliding background on hover */}
       <motion.div 

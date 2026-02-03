@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { Clock, Zap, Building2, ShieldCheck } from "lucide-react";
@@ -28,8 +28,12 @@ const benefits = [
   },
 ];
 
+const VIDEO_URL = "https://res.cloudinary.com/dfwty72r9/video/upload/v1769715839/prop-video_kwwhi6.mp4";
+const FALLBACK_IMAGE = "https://res.cloudinary.com/dfwty72r9/image/upload/v1769715563/photo-1723639906488-1761847f6474_yzldfz.avif";
+
 export default function WhyChooseUs() {
   const containerRef = useRef<HTMLDivElement>(null);
+  const [videoError, setVideoError] = useState(false);
   
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -79,6 +83,10 @@ export default function WhyChooseUs() {
     [0, 1, 1, 0]
   );
 
+  const handleVideoError = () => {
+    setVideoError(true);
+  };
+
   return (
     <div 
       ref={containerRef} 
@@ -108,7 +116,7 @@ export default function WhyChooseUs() {
             <div className="absolute inset-0 bg-[#0B1F3B]/20" />
           </motion.div>
 
-          {/* Center Video */}
+          {/* Center Video/Image */}
           <motion.div 
             style={{ 
               width: videoWidth,
@@ -117,15 +125,27 @@ export default function WhyChooseUs() {
             }}
             className="relative overflow-hidden shadow-2xl z-10 bg-[#0B1F3B] will-change-transform"
           >
-            <video 
-              src="https://res.cloudinary.com/dfwty72r9/video/upload/v1769715839/prop-video_kwwhi6.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-              preload="auto"
-            />
+            {!videoError ? (
+              <video 
+                src={VIDEO_URL}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+                preload="auto"
+                onError={handleVideoError}
+              />
+            ) : (
+              <Image
+                src={FALLBACK_IMAGE}
+                alt="Luxury accommodation"
+                fill
+                className="object-cover"
+                priority
+                quality={90}
+              />
+            )}
             
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3B]/90 via-[#0B1F3B]/40 to-transparent z-20 pointer-events-none" />
 
@@ -196,15 +216,27 @@ export default function WhyChooseUs() {
           className="md:hidden relative w-full h-full flex items-center justify-center"
         >
           <div className="relative w-full h-[85%] rounded-2xl overflow-hidden shadow-2xl bg-[#0B1F3B]">
-            <video 
-              src="https://res.cloudinary.com/dfwty72r9/video/upload/v1769715839/prop-video_kwwhi6.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full h-full object-cover"
-              preload="metadata"
-            />
+            {!videoError ? (
+              <video 
+                src={VIDEO_URL}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="w-full h-full object-cover"
+                preload="metadata"
+                onError={handleVideoError}
+              />
+            ) : (
+              <Image
+                src={FALLBACK_IMAGE}
+                alt="Luxury accommodation"
+                fill
+                className="object-cover"
+                priority
+                quality={90}
+              />
+            )}
             
             <div className="absolute inset-0 bg-gradient-to-t from-[#0B1F3B]/95 via-[#0B1F3B]/50 to-transparent z-20 pointer-events-none" />
 

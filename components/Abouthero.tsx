@@ -1,36 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-
 export default function AboutHero() {
-  const scrollRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    if (!scrollContainer) return;
-
-    let animationFrameId: number;
-    let scrollPosition = 0;
-
-    const scroll = () => {
-      scrollPosition += 0.8;
-      if (scrollContainer) {
-        scrollContainer.scrollLeft = scrollPosition;
-        
-        // Reset seamlessly when reaching halfway point
-        if (scrollPosition >= scrollContainer.scrollWidth / 2) {
-          scrollPosition = 0;
-          scrollContainer.scrollLeft = 0;
-        }
-      }
-      animationFrameId = requestAnimationFrame(scroll);
-    };
-
-    animationFrameId = requestAnimationFrame(scroll);
-
-    return () => cancelAnimationFrame(animationFrameId);
-  }, []);
-
   const apartments = [
     'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&h=600&fit=crop',
     'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=700&h=500&fit=crop',
@@ -89,36 +59,55 @@ export default function AboutHero() {
         <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
         <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
         
-        <div 
-          ref={scrollRef}
-          className="flex gap-6 items-center"
-          style={{ 
-            overflowX: 'scroll',
-            scrollbarWidth: 'none',
-            msOverflowStyle: 'none',
-          }}
-        >
-          {duplicatedApartments.map((image, index) => (
-            <div
-              key={index}
-              className="flex-shrink-0 rounded-2xl overflow-hidden shadow-lg"
-              style={{
-                width: index % 4 === 0 ? '350px' : index % 4 === 1 ? '280px' : index % 4 === 2 ? '420px' : '320px',
-                height: index % 4 === 0 ? '380px' : index % 4 === 1 ? '340px' : index % 4 === 2 ? '320px' : '360px',
-              }}
-            >
-              <img
-                src={image}
-                alt={`Apartment ${index + 1}`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          ))}
+        <div className="scroll-container">
+          <div className="scroll-content">
+            {duplicatedApartments.map((image, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 rounded-2xl overflow-hidden shadow-lg"
+                style={{
+                  width: index % 4 === 0 ? '350px' : index % 4 === 1 ? '280px' : index % 4 === 2 ? '420px' : '320px',
+                  height: index % 4 === 0 ? '380px' : index % 4 === 1 ? '340px' : index % 4 === 2 ? '320px' : '360px',
+                }}
+              >
+                <img
+                  src={image}
+                  alt={`Apartment ${index + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         <style jsx>{`
-          div::-webkit-scrollbar {
-            display: none;
+          .scroll-container {
+            overflow: hidden;
+            width: 100%;
+          }
+          
+          .scroll-content {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            animation: scroll 20s linear infinite;
+          }
+          
+          /* ADJUST SPEED HERE: Change the 60s value
+             - Higher value = slower (e.g., 80s, 100s)
+             - Lower value = faster (e.g., 40s, 30s)
+          */
+          @keyframes scroll {
+            0% {
+              transform: translateX(0);
+            }
+            100% {
+              transform: translateX(-50%);
+            }
+          }
+          
+          .scroll-content:hover {
+            animation-play-state: paused;
           }
         `}</style>
       </section>

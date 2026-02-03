@@ -24,6 +24,21 @@ interface InquiryModalProps {
   };
 }
 
+const INITIAL_FORM_DATA = {
+  name: "",
+  email: "",
+  mobile: "",
+  whatsappForm: "",
+  rentalTerm: "",
+  country: "England",
+  exactLocation: "",
+  message: "",
+  monthlyIncome: "",
+  bedrooms: "",
+  bathrooms: "",
+  additionalInfo: "",
+};
+
 export default function PropertyInquiryModal({ 
   isOpen, 
   onClose, 
@@ -38,22 +53,13 @@ export default function PropertyInquiryModal({
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
 
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    mobile: "",
-    whatsappForm: "",
+    ...INITIAL_FORM_DATA,
     rentalTerm: isMandatoryTerm ? "1-6 Months" : "",
-    country: "England",
-    exactLocation: "",
-    message: "",
-    monthlyIncome: "",
-    bedrooms: "",
-    bathrooms: "",
-    additionalInfo: "",
   });
 
   const [currentImg, setCurrentImg] = useState(0);
 
+  // Reset form when modal opens
   useEffect(() => {
     if (isOpen) {
       if (initialMethod) {
@@ -63,8 +69,14 @@ export default function PropertyInquiryModal({
         setStep("selection");
       }
       setSubmitStatus("idle");
+      
+      // Reset form data when opening
+      setFormData({
+        ...INITIAL_FORM_DATA,
+        rentalTerm: isMandatoryTerm ? "1-6 Months" : "",
+      });
     }
-  }, [isOpen, initialMethod]);
+  }, [isOpen, initialMethod, isMandatoryTerm]);
 
   useEffect(() => {
     if (initialData && isOpen) {
@@ -134,7 +146,7 @@ Features: ${formData.additionalInfo}`;
     if (method === "whatsapp") {
       window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(inquiryText)}`, "_blank");
       setIsSubmitting(false);
-      onClose();
+      setSubmitStatus("success");
     } else {
       try {
         const response = await fetch('/api/send', {
@@ -149,9 +161,7 @@ Features: ${formData.additionalInfo}`;
 
         if (response.ok) {
           setSubmitStatus("success");
-          setTimeout(() => {
-            onClose();
-          }, 2000);
+          // User will close manually with X button
         } else {
           setSubmitStatus("error");
           // Fallback to mailto if API fails
@@ -312,12 +322,20 @@ Features: ${formData.additionalInfo}`;
                   </p>
 
                   {submitStatus === "success" ? (
-                    <div className="py-12 flex flex-col items-center justify-center text-center">
+                    <div className="py-12 flex flex-col items-center justify-center text-center relative">
                       <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
                         <Send size={40} />
                       </div>
                       <h4 className="text-2xl font-bold text-navy mb-2">Message Sent!</h4>
-                      <p className="text-muted">We've received your inquiry and will be in touch within 24 hours.</p>
+                      <p className="text-muted mb-6">We've received your inquiry and will be in touch within 24 hours.</p>
+                      
+                      <button
+                        onClick={onClose}
+                        className="bg-navy text-white px-8 py-3 rounded-xl font-bold hover:bg-gold hover:text-navy transition-all flex items-center gap-2"
+                      >
+                        <X size={20} />
+                        Close
+                      </button>
                     </div>
                   ) : (
                     <form onSubmit={handleFinalSubmit} className="space-y-6 pb-4">
