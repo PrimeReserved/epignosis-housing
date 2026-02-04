@@ -1,7 +1,9 @@
 export const SITE_NAME = "Epignosis Housing Co";
 export const DOMAIN = "epignosishousing.com";
 export const EMAIL = "info@epignosishousing.com";
-export const WHATSAPP_NUMBER = "+440000000000"; // Placeholder
+export const PHONE_NUMBER = "07940 406491";
+export const WHATSAPP_NUMBER = "07446 368487";
+export const INSTAGRAM_URL = "https://www.instagram.com/epignosishousingco/";
 
 export const NAV_LINKS = [
   { name: "About Us", href: "/about" },

@@ -144,7 +144,16 @@ Features: ${formData.additionalInfo}`;
     }
 
     if (method === "whatsapp") {
-      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(inquiryText)}`, "_blank");
+      // Formatted strictly for international format (no + sign, no leading 0, UK 44 prefix)
+      const digits = WHATSAPP_NUMBER.replace(/\D/g, '');
+      const formattedWhatsApp = digits.startsWith('0') ? '44' + digits.slice(1) : digits;
+      
+      // Revert to robust API link that handles both App and Web gracefully
+      const waUrl = `https://api.whatsapp.com/send?phone=${formattedWhatsApp}&text=${encodeURIComponent(inquiryText)}`;
+
+      // Use window.open which interacts correctly with the API redirect logic
+      window.open(waUrl, '_blank');
+      
       setIsSubmitting(false);
       setSubmitStatus("success");
     } else {
@@ -321,7 +330,7 @@ Features: ${formData.additionalInfo}`;
                     )}
                   </p>
 
-                  {submitStatus === "success" ? (
+                  {submitStatus === "success" && method !== "whatsapp" ? (
                     <div className="py-12 flex flex-col items-center justify-center text-center relative">
                       <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-6">
                         <Send size={40} />
@@ -336,6 +345,31 @@ Features: ${formData.additionalInfo}`;
                         <X size={20} />
                         Close
                       </button>
+                    </div>
+                  ) : submitStatus === "success" && method === "whatsapp" ? (
+                    <div className="py-12 flex flex-col items-center justify-center text-center relative">
+                      <div className="w-20 h-20 bg-[#25D366]/10 text-[#25D366] rounded-full flex items-center justify-center mb-6">
+                        <MessageCircle size={40} />
+                      </div>
+                      <h4 className="text-2xl font-bold text-navy mb-2">Continue on WhatsApp</h4>
+                      <p className="text-muted mb-6 max-w-sm">
+                        We've opened WhatsApp in a new tab. Please click the <strong>send button</strong> in that chat to finalize your inquiry.
+                      </p>
+                      
+                      <div className="flex flex-col gap-3 w-full sm:w-auto">
+                        <button
+                          onClick={onClose}
+                          className="bg-navy text-white px-8 py-3 rounded-xl font-bold hover:bg-gold hover:text-navy transition-all flex items-center justify-center gap-2"
+                        >
+                          I've Sent the Message
+                        </button>
+                        <button
+                          onClick={() => setSubmitStatus("idle")}
+                          className="text-navy/50 text-xs font-bold uppercase tracking-widest hover:text-navy transition-colors p-2"
+                        >
+                          It didn't open? Try again
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <form onSubmit={handleFinalSubmit} className="space-y-6 pb-4">

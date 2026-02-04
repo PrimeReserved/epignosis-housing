@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import PropertyInquiryModal from "./PropertyInquiryModal";
 import { Send, Globe2, Phone, Mail, MapPin } from "lucide-react";
-import { UK_COUNTRIES } from "@/constants/data";
+import { UK_COUNTRIES, PHONE_NUMBER } from "@/constants/data";
 
 const INITIAL_FORM_DATA = {
   name: "",
@@ -79,9 +79,9 @@ export default function ContactHero() {
                 <Mail size={18} className="group-hover:scale-110 transition-transform" />
                 <span>info@epignosishousing.com</span>
               </a>
-              <a href="tel:+447123456789" className="flex items-center gap-2 text-white/70 hover:text-gold transition-colors group">
+              <a href={`tel:${PHONE_NUMBER.replace(/\s/g, '')}`} className="flex items-center gap-2 text-white/70 hover:text-gold transition-colors group">
                 <Phone size={18} className="group-hover:scale-110 transition-transform" />
-                <span>+44 712 345 6789</span>
+                <span>{PHONE_NUMBER}</span>
               </a>
               <div className="flex items-center gap-2 text-white/70">
                 <MapPin size={18} />

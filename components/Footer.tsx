@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { SITE_NAME, EMAIL, NAV_LINKS, WHATSAPP_NUMBER } from "@/constants/data";
+import { SITE_NAME, EMAIL, NAV_LINKS, PHONE_NUMBER, INSTAGRAM_URL } from "@/constants/data";
 import { Instagram, Linkedin, Facebook, Mail, Phone } from "lucide-react";
 
 const LOGO_URL = "https://res.cloudinary.com/dfwty72r9/image/upload/v1770105452/Epignosis_Housing_Co_Logo_-_jqvggd.png";
@@ -39,11 +39,11 @@ export default function Footer() {
                 </div>
                 <span>{EMAIL}</span>
               </a>
-              <a href={`tel:${WHATSAPP_NUMBER}`} className="group flex items-center gap-3 text-sm text-white/70 hover:text-gold transition-colors">
+              <a href={`tel:${PHONE_NUMBER.replace(/\s/g, '')}`} className="group flex items-center gap-3 text-sm text-white/70 hover:text-gold transition-colors">
                 <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-gold/20 transition-all">
                   <Phone size={16} />
                 </div>
-                <span>{WHATSAPP_NUMBER}</span>
+                <span>{PHONE_NUMBER}</span>
               </a>
             </div>
           </div>
@@ -65,7 +65,7 @@ export default function Footer() {
             </div>
             
             <div className="flex items-center gap-4">
-              <Link href="#" className="text-white/50 hover:text-gold transition-all hover:scale-110">
+              <Link href={INSTAGRAM_URL} target="_blank" className="text-white/50 hover:text-gold transition-all hover:scale-110">
                 <Instagram size={18} />
               </Link>
               <Link href="#" className="text-white/50 hover:text-gold transition-all hover:scale-110">
