@@ -117,6 +117,27 @@ export default function PropertyInquiryModal({
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleWhatsAppDirect = (message: string) => {
+    // 1. Remove all non-numeric characters first
+    let digits = WHATSAPP_NUMBER.replace(/\D/g, '');
+    
+    // 2. Intelligence check for UK/International
+    if (WHATSAPP_NUMBER.trim().startsWith('+')) {
+       // It was explicitly international, so just use the stripped digits
+    } else if (digits.startsWith('0')) {
+       digits = '44' + digits.slice(1);
+    }
+    
+    const formattedWhatsApp = digits;
+    
+    // Use the full API link with the detailed message
+    const waUrl = `https://api.whatsapp.com/send?phone=${formattedWhatsApp}&text=${encodeURIComponent(message)}`;
+
+    // Open in new tab
+    window.open(waUrl, '_blank');
+    // We do NOT close the modal immediately here, we let the success state show
+  };
+
   const handleFinalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -144,19 +165,11 @@ Features: ${formData.additionalInfo}`;
     }
 
     if (method === "whatsapp") {
-      // Formatted strictly for international format (no + sign, no leading 0, UK 44 prefix)
-      const digits = WHATSAPP_NUMBER.replace(/\D/g, '');
-      const formattedWhatsApp = digits.startsWith('0') ? '44' + digits.slice(1) : digits;
-      
-      // Revert to robust API link that handles both App and Web gracefully
-      const waUrl = `https://api.whatsapp.com/send?phone=${formattedWhatsApp}&text=${encodeURIComponent(inquiryText)}`;
-
-      // Use window.open which interacts correctly with the API redirect logic
-      window.open(waUrl, '_blank');
-      
+      handleWhatsAppDirect(inquiryText); // Pass the detailed text
       setIsSubmitting(false);
       setSubmitStatus("success");
     } else {
+// ... rest keeps same logic
       try {
         const response = await fetch('/api/send', {
           method: 'POST',
@@ -293,7 +306,7 @@ Features: ${formData.additionalInfo}`;
                         <MessageCircle size={30} />
                       </div>
                       <h4 className="text-xl font-bold text-navy mb-2">WhatsApp Chat</h4>
-                      <p className="text-sm text-muted">Instant conversation with our account managers for quick replies.</p>
+                      <p className="text-sm text-muted">Start an inquiry chat with our team on WhatsApp.</p>
                     </button>
                   </div>
                 </motion.div>

@@ -4,7 +4,7 @@ import { useState } from "react";
 import Footer from "@/components/Footer";
 import PropertySlideshow from "@/components/PropertySlideshow";
 import PropertyInquiryModal from "@/components/PropertyInquiryModal";
-import { PROPERTY_IMAGES, PROPERTY_TEMPLATE } from "@/constants/data";
+import { PROPERTY_IMAGES, PROPERTY_TEMPLATE, WHATSAPP_NUMBER } from "@/constants/data";
 import { Mail, MessageCircle, Calendar, MapPin, Check } from "lucide-react";
 import { motion } from "framer-motion";
 

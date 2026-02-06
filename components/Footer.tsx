@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SITE_NAME, EMAIL, NAV_LINKS, PHONE_NUMBER, INSTAGRAM_URL } from "@/constants/data";
-import { Instagram, Linkedin, Facebook, Mail, Phone } from "lucide-react";
+import { Instagram, Mail, Phone } from "lucide-react";
 
 const LOGO_URL = "https://res.cloudinary.com/dfwty72r9/image/upload/v1770105452/Epignosis_Housing_Co_Logo_-_jqvggd.png";
 
@@ -67,12 +67,6 @@ export default function Footer() {
             <div className="flex items-center gap-4">
               <Link href={INSTAGRAM_URL} target="_blank" className="text-white/50 hover:text-gold transition-all hover:scale-110">
                 <Instagram size={18} />
-              </Link>
-              <Link href="#" className="text-white/50 hover:text-gold transition-all hover:scale-110">
-                <Linkedin size={18} />
-              </Link>
-              <Link href="#" className="text-white/50 hover:text-gold transition-all hover:scale-110">
-                <Facebook size={18} />
               </Link>
             </div>
           </div>

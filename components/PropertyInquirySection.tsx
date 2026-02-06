@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MapPin, Globe, Mail, MessageCircle, ChevronRight } from "lucide-react";
-import { UK_COUNTRIES } from "@/constants/data";
+import { UK_COUNTRIES, WHATSAPP_NUMBER } from "@/constants/data";
 import PropertyInquiryModal from "./PropertyInquiryModal";
 
 const RENTAL_TERMS = ["1-6 Months", "6-12 Months", "1-5 Years", "5+ Years"];
@@ -43,6 +43,8 @@ export default function PropertyInquirySection() {
       setStep("inquiry");
     }
   };
+
+  /* Removed handleWhatsAppDirect as we are reverting to form flow */
 
   const handleInquiryClick = (method: "email" | "whatsapp") => {
     setInquiryMethod(method);
